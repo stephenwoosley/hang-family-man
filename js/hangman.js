@@ -8,77 +8,108 @@ var blanks = 0;
 var chosenWordArray = [];
 
 var blanksArray = [];
+
+var lettersGuessed = [];
           
-var randomNumber = Math.floor(Math.random() * words.length);
+var randomNumber = 0;
 
-console.log(randomNumber);
+var chosenWord = '';
 
-var chosenWord = words[randomNumber];
 
-console.log(chosenWord);
+var chooseNewWord = function() {
+
+  chosenWordArray = [];
+  blanksArray = [];
+  lettersGuessed = [];
+  $("#guessedLetters").text("");
+  $("#blankArea").text("???");
+
+  randomNumber = Math.floor(Math.random() * words.length);
+  console.log(randomNumber);
+
+  chosenWord = words[randomNumber];
+  console.log(chosenWord);
+
+  for (var i = 0; i < chosenWord.length; i++) {
+    var chosenCharacter = chosenWord.charAt(i).toLowerCase();
+    console.log(chosenCharacter);
+    chosenWordArray.push(chosenCharacter);
+    console.log(chosenWordArray);
+    blanksArray.push("_ ");
+    console.log(blanksArray);
+  }
+}
 
 $(document).ready(function() {
 
-      for (var i = 0; i < chosenWord.length; i++) {
-              chosenCharacter = chosenWord.charAt(i).toLowerCase();
-              console.log(chosenCharacter);
-              chosenWordArray.push(chosenCharacter);
-              console.log(chosenWordArray);
-              blanksArray.push("_ ");
-              console.log(blanksArray);
-      }
-      
-      $("#startButton").on("click", function() { 
+  $("#startButton").on("click", function() { 
+    console.log("Button pushed!");
+    chooseNewWord();
+    $("#guessedLetters").text("");
+    $("#blankArea").text(blanksArray.join(""));
+  });
 
-      });
-
+  chooseNewWord();
 });
 
 
 document.onkeyup = function(event) {
+
+        //userType defined and logged to console
         var userType = String.fromCharCode(event.keyCode).toLowerCase();
         console.log(userType);
 
+        // attempting to locate the current letter in list of guesses
+        var isInArray = jQuery.inArray(userType.toUpperCase(), lettersGuessed);
+        console.log(isInArray + " is isInArray right now, and is the index of the last guess");
+        console.log(lettersGuessed + " is lettersGuessed after last guess");
 
-        for (var j=0; j < chosenWordArray.length; j++) {
-
-            if (userType === chosenWordArray[j]) {
-              blanksArray[j] = chosenWordArray[j];
-              console.log(blanksArray);
-            }
-
+        // if list of guesses contains letter already, alert.
+        if(isInArray > -1) {
+          alert("You already guessed that letter!");
         }
 
+        //if list of guesses doesn't contain letter, continue.
+        else {
+        
+          // creating a t/f variable to check user's guess
+          var containsLetter = false;
 
+          // adding the letter to the list of letters guessed
+          lettersGuessed.push(userType.toUpperCase());
+          console.log(lettersGuessed);
 
-        $("#blankArea").text(blanksArray);
+          // loop through each letter of chosen word and see if userType matches any letter. if so print out to page and flip t/f variable.
+          for (var j=0; j < chosenWordArray.length; j++) {
+              if (userType === chosenWordArray[j]) {
+                blanksArray[j] = chosenWordArray[j].toUpperCase();
+                console.log(blanksArray);
+                containsLetter = true;
+              }
+          }
 
-          // switch (userType) {
+          // if the letter is not in the chosen word, add to wrong letters list on page
+          if (!containsLetter){
+            $("#guessedLetters").prepend(userType + " ");
+          } 
 
-          //   case "h":
-          //     car.honk()
-          //     car.reWriteStats()
-          //     console.log("should be working")
-          //     break;
+          $("#blankArea").text(blanksArray.join("")); 
 
-          //   case "d":
-          //     car.driveToWork()
-          //     car.reWriteStats()
-          //     console.log("should be working")
-          //     break;
-          //   case "w":
-          //     car.driveAroundWorld()
-          //     car.reWriteStats()
-          //     console.log("should be working")
-          //     break;
-          //   case "t":
-          //     car.getTuneUp()
-          //     car.reWriteStats()
-          //     console.log("should be working")
-          //     break;
-          //   default: 
-          //     return "I'm sorry, but your choice is not valid."
-          //     break;
-          // }
-      };
+          var correctLetters = blanksArray.join("");
+          console.log("Variable correctLetters is " + correctLetters);
+
+          var fullWord = chosenWordArray.join("").toUpperCase();
+          console.log("fullWord variable is now " + fullWord);
+
+          if(correctLetters === fullWord) {
+            console.log("USER WINS!!!");
+            alert("YOU WON!!!!!");
+            chooseNewWord();
+          }
+        }         
+};
+
+// function isLetter(str) {
+//   return str.length === 1 && str.match(/[a-z]/i);
+// }
 

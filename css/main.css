@@ -1,0 +1,30 @@
+#blankArea {
+	text-align: center;
+	font-size: 4em;
+	margin-top: 30px;
+}
+
+.text-center {
+	margin: 40px 0px 40px 0px;
+}
+
+/*button h1 {
+	margin: 20px 0px 20px 0px;
+
+}*/
+
+.blank-container {
+	text-align: center;
+}
+
+#blankArea {
+	text-align: center;
+	display: inline;
+	border: 10px solid #65b9ac;
+	padding: 5px 10px 5px 10px;
+	border-radius: 4px;
+}
+
+.btn-primary {
+	background-color: #65b9ac;
+}

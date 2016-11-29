@@ -18,24 +18,28 @@
 <body>
 
   <div class="jumbotron">
-
-    <h1 class="text-center">Hangman!</h1>
-
+    <h1 class="text-center">Hang(our family)man!</h1>
     <div class="text-center">
-
-      <!-- Here we have our button with id startButton -->
-      <button id="startButton" class="btn btn-primary btn-lg"><h1><span class="glyphicon glyphicon-question-sign"></span></h1></button>
-
+      	<button id="startButton" class="btn btn-primary btn-md">
+	      	<h3>
+	      		<span id="button-text">New Family Member</span>
+	  		</h3>
+		</button>
+		<h3>
+			Type to start guessing. Push button for a new word. 
+		</h3>
     </div>
-
-    <div>
-    	<p id="blankArea"></p>
+    <div class="blank-container">
+    	<h1 id="blankArea">
+    		???
+    	</h1>
     </div>
-
   </div>
-
-  <!-- Here we have div called "randomNumber" where our random number will go -->
-  <h1 class="text-center" id="randomNumber"></h1>
+  <div>
+  	<div id="hung-man">
+  	</div>
+  </div>
+  <h3 class="text-center" id="guessedLetters"></h3>
 
 
 </body>
